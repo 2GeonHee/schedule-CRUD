@@ -8,17 +8,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Scedule {
+public class Schedule {
     private Long id;
     private String title;
     private String contents;
+    private String person;
     private int password;
     private String date;
 
-    public Scedule(RequestDto requestDto) {
+    public Schedule(RequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+        this.person = requestDto.getPerson();
         this.password = requestDto.getPassword();
         this.date = requestDto.getDate();
+    }
+    public void update(RequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.person = requestDto.getPerson();
     }
 }
