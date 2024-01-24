@@ -1,67 +1,36 @@
 package com.sparta.schedule.controller;
 
-import com.sparta.schedule.dto.RequestDto;
-import com.sparta.schedule.dto.ResponseDto;
+import com.sparta.schedule.dto.ScheduleRequestDto;
+import com.sparta.schedule.dto.ScheduleResponseDto;
 import com.sparta.schedule.entity.Schedule;
-import lombok.Value;
-import lombok.val;
+import com.sparta.schedule.service.ScheduleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Key;
-import java.util.*;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequiredArgsConstructor
 public class ScheduleController {
-    Scanner sc = new Scanner(System.in);
-    private final Map<Long, Schedule> scheduleList = new HashMap<>();
+
+    private final ScheduleService scheduleService;
 
     @PostMapping("/schedule")
-    public ResponseDto newSchedule(@RequestBody RequestDto requestDto) {
-        Schedule schedule = new Schedule(requestDto);
-
-        Long maxId = !scheduleList.isEmpty() ? Collections.max(scheduleList.keySet()) + 1 : 1;
-        schedule.setId(maxId);
-
-        scheduleList.put(schedule.getId(), schedule);
-
-        ResponseDto responseDto = new ResponseDto(schedule);
-
-        return responseDto;
+    public ScheduleResponseDto saveSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto) {
+        return scheduleService.saveSchedule(scheduleRequestDto);
     }
 
     @GetMapping("/schedule")
-    public List<ResponseDto> getAllSchedule() {
-        List<ResponseDto> allList = scheduleList.values().stream().map(ResponseDto::new).toList();
-        return allList;
+    public List<Schedule> getScheduleList() {
+        return scheduleService.getScheduleList();
     }
 
-    //    키값에 해당하는 value 가져오기
-//    @GetMapping("/schedule")
-//    public void getSchedule() {
-//        if (scheduleList.containsKey(key)) {
-//            System.out.println(scheduleList.get(key));
-//        }
-//    }
-
     @PutMapping("/schedule/{id}")
-    public Long update(@PathVariable Long id, @RequestBody RequestDto requestDto) {
-        if (scheduleList.containsKey(id)) {
-            Schedule schedule = scheduleList.get(id);
-            schedule.update(requestDto);
-            return schedule.getId();
-        } else {
-            throw new IllegalArgumentException("일정이 존재하지 않습니다");
-        }
+    public Schedule update(Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+        return scheduleService.update(id, scheduleRequestDto);
     }
 
     @DeleteMapping("/schedule/{id}")
-    public Long delete(@PathVariable Long id, @RequestBody RequestDto requestDto) {
-        if (scheduleList.containsKey(id)) {
-            scheduleList.remove(id);
-            return id;
-        } else {
-            throw new IllegalArgumentException("일정이 존재하지 않습니다.");
-        }
+    public void deleteSchedule(Long id) {
     }
 }

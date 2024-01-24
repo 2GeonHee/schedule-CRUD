@@ -1,31 +1,31 @@
 package com.sparta.schedule.entity;
 
-import com.sparta.schedule.dto.RequestDto;
+import com.sparta.schedule.dto.ScheduleRequestDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
 @NoArgsConstructor
+@Getter
+@Entity
 public class Schedule {
+    @Id
+    @GeneratedValue
     private Long id;
-    private String title;
+    private String name;
     private String contents;
-    private String person;
-    private int password;
-    private String date;
+    private String password;
 
-    public Schedule(RequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
-        this.person = requestDto.getPerson();
-        this.password = requestDto.getPassword();
-        this.date = requestDto.getDate();
+    public Schedule(ScheduleRequestDto scheduleRequestDto) {
+        this.name = scheduleRequestDto.getName();
+        this.contents = scheduleRequestDto.getContents();
+        this.password = scheduleRequestDto.getPassword();
     }
-    public void update(RequestDto requestDto) {
-        this.title = requestDto.getTitle();
+
+    public void update(ScheduleRequestDto requestDto) {
+        this.name = requestDto.getName();
         this.contents = requestDto.getContents();
-        this.person = requestDto.getPerson();
     }
 }
