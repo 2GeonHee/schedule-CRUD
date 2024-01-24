@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ResponseDtoTest {
+class ScheduleResponseDtoTest {
 
     @Test
     void getId() {
