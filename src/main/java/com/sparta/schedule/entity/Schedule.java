@@ -18,10 +18,10 @@ public class Schedule {
     private String contents;
     private String password;
 
-    public Schedule(ScheduleRequestDto scheduleRequestDto) {
-        this.name = scheduleRequestDto.getName();
-        this.contents = scheduleRequestDto.getContents();
-        this.password = scheduleRequestDto.getPassword();
+    public Schedule(ScheduleRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
     }
 
     public void update(ScheduleRequestDto requestDto) {

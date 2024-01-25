@@ -6,7 +6,9 @@ import com.sparta.schedule.entity.Schedule;
 import com.sparta.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.image.RescaleOp;
 import java.util.List;
 
 @Service
@@ -14,8 +16,9 @@ import java.util.List;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleResponseDto saveSchedule(ScheduleRequestDto scheduleRequestDto) {
-        Schedule schedule = new Schedule(scheduleRequestDto);
+    @Transactional
+    public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
+        Schedule schedule = new Schedule(requestDto);
         Schedule saveSchedule = scheduleRepository.save(schedule);
         return new ScheduleResponseDto(schedule);
     }
@@ -24,14 +27,25 @@ public class ScheduleService {
         return scheduleRepository.findAll();
     }
 
-    public Schedule update(Long id, ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto getSchdule(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
-        schedule.update(requestDto);
-        return schedule;
+        return new ScheduleResponseDto(schedule);
     }
 
+    @Transactional
+    public Schedule update(Long id, ScheduleRequestDto requestDto) {
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
+//        if (scheduleRepository.findById(id).equals(requestDto.getPassword())) {
+            schedule.update(requestDto);
+//        }
+            return schedule;
+    }
+
+    @Transactional
     public void deleteSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
-        scheduleRepository.deleteById(id);
+//        if (scheduleRepository.findById(id).equals(requestDto.getPassword())) {
+            scheduleRepository.deleteById(id);
+//        }
     }
 }

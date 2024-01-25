@@ -16,8 +16,8 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping("/schedule")
-    public ScheduleResponseDto saveSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto) {
-        return scheduleService.saveSchedule(scheduleRequestDto);
+    public ScheduleResponseDto saveSchedule(@RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.saveSchedule(requestDto);
     }
 
     @GetMapping("/schedule")
@@ -25,12 +25,19 @@ public class ScheduleController {
         return scheduleService.getScheduleList();
     }
 
+    @GetMapping("/schedule/{id}")
+    public ScheduleResponseDto getSchedule(@PathVariable Long id) {
+        return scheduleService.getSchdule(id);
+    }
+
+
     @PutMapping("/schedule/{id}")
-    public Schedule update(Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+    public Schedule update(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
         return scheduleService.update(id, scheduleRequestDto);
     }
 
     @DeleteMapping("/schedule/{id}")
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(@PathVariable Long id) {
+        scheduleService.deleteSchedule(id);
     }
 }

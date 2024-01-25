@@ -10,9 +10,12 @@ public class ScheduleResponseDto {
     private String contents;
     private String password;
 
+//    public ScheduleResponseDto() {
+//    }
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.name = schedule.getName();
         this.contents = schedule.getContents();
+        this.password = schedule.getPassword();
     }
 }
