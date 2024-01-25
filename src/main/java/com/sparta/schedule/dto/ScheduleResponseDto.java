@@ -6,16 +6,15 @@ import lombok.Getter;
 @Getter
 public class ScheduleResponseDto {
     private Long id;
-    private String name;
+    private String title;
     private String contents;
+    private String name;
     private String password;
 
-//    public ScheduleResponseDto() {
-//    }
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
-        this.name = schedule.getName();
+        this.title = schedule.getTitle();
         this.contents = schedule.getContents();
-        this.password = schedule.getPassword();
+        this.name = schedule.getName();
     }
 }

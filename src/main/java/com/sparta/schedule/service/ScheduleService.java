@@ -35,17 +35,17 @@ public class ScheduleService {
     @Transactional
     public Schedule update(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
-//        if (scheduleRepository.findById(id).equals(requestDto.getPassword())) {
+        if (schedule.pass1(requestDto)) {
             schedule.update(requestDto);
-//        }
+        }
             return schedule;
     }
 
     @Transactional
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(Long id, String password) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정이 없습니다."));
-//        if (scheduleRepository.findById(id).equals(requestDto.getPassword())) {
+        if (schedule.pass2(password)){
             scheduleRepository.deleteById(id);
-//        }
+        }
     }
 }
